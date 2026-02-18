@@ -9,6 +9,7 @@ import { GiftButton } from "./gift-button"
 import { AnimatedTitle } from "./animated-text"
 import { GlowRings } from "./glow-rings"
 import { CountdownTimer } from "./countdown-timer"
+import { SecretCodeModal } from "./secret-code-modal"
 
 type Phase = "intro" | "reveal" | "ready"
 
@@ -22,6 +23,7 @@ export function BirthdayScene({ onOpen }: { onOpen: () => void }) {
   const [isLocked, setIsLocked] = useState(true)
   const [bypassCount, setBypassCount] = useState(0)
   const [shakeLocked, setShakeLocked] = useState(false)
+  const [showSecretModal, setShowSecretModal] = useState(false)
 
   // Check lock status on mount
   useEffect(() => {
@@ -65,13 +67,19 @@ export function BirthdayScene({ onOpen }: { onOpen: () => void }) {
     setBypassCount((prev) => {
       const newCount = prev + 1
       if (newCount === 7) {
-        setIsLocked(false)
-        // Unlock celebration
-        setShowConfetti(false)
-        setTimeout(() => setShowConfetti(true), 100)
+        setShowSecretModal(true)
+        return 0 // Reset count
       }
       return newCount
     })
+  }
+
+  const handleUnlock = () => {
+    setIsLocked(false)
+    setShowSecretModal(false)
+    // Unlock celebration
+    setShowConfetti(false)
+    setTimeout(() => setShowConfetti(true), 100)
   }
 
   const handleOpenGift = useCallback(() => {
@@ -94,6 +102,14 @@ export function BirthdayScene({ onOpen }: { onOpen: () => void }) {
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden" style={{ background: "#000000" }}>
+      {/* Secret Code Modal */}
+      {showSecretModal && (
+        <SecretCodeModal 
+          onUnlock={handleUnlock} 
+          onCancel={() => setShowSecretModal(false)} 
+        />
+      )}
+
       {/* Content wrapper with blur transition */}
       <div 
         className={`fixed inset-0 w-full h-full transition-all duration-1000 ease-in-out ${
