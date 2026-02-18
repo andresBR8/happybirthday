@@ -9,7 +9,7 @@ import { GalleryQuote } from "./gallery-quote"
 
 const moments = [
   {
-    src: "/galeria/foto1.png",
+    src: "/galeria/foto5.png",
     alt: "Un dia especial",
     caption: "Esos ojitos",
     date: "MAYO 2025",
