@@ -54,11 +54,11 @@ export function ProposalSection({ audioRef }: ProposalSectionProps) {
       const currentTime = audioRef.current?.currentTime || 0;
 
       if (currentTime >= 53) {
-         if (phase !== "climax" && phase !== "no-escape" && phase !== "yes") {
+         if (phase !== "climax") {
              setPhase("climax");
          }
       } else if (currentTime >= 44) {
-         if (phase !== "question" && phase !== "climax" && phase !== "no-escape" && phase !== "yes") {
+         if (phase !== "question" && phase !== "climax") {
              setPhase("question");
              setShowCharacters(true);
          }
